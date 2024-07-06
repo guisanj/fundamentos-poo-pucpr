@@ -1,9 +1,9 @@
 package modelo;
 
 public class Financiamento {
-    private double valorImovel;
-    private int prazoFinanciamentoAnos;
-    private double taxaJurosAnual;
+    protected double valorImovel;
+    protected int prazoFinanciamentoAnos;
+    protected double taxaJurosAnual;
 
     public double getvalorImovel() {
         return this.valorImovel;
@@ -17,7 +17,7 @@ public class Financiamento {
         return this.taxaJurosAnual;
     }
 
-    public Financiamento(double valorImovel, int prazoFinanciamento, double taxaJurosAnual) {
+    public Financiamento(double valorImovel, int prazoFinanciamentoAnos, double taxaJurosAnual) {
         this.valorImovel = valorImovel;
         this.prazoFinanciamentoAnos = prazoFinanciamentoAnos;
         this.taxaJurosAnual = taxaJurosAnual;
