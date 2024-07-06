@@ -15,16 +15,9 @@ public class Main {
         InterfaceUsuario interfaceUsuario = new InterfaceUsuario();
         List<Financiamento> listaFinanciamento = new ArrayList<Financiamento>();
 
-        double valorImovel = interfaceUsuario.pedirValorImovel();
-        int prazoFinanciamento = interfaceUsuario.pedirPrazoFinanciamento();
-        double taxaJurosAnual = interfaceUsuario.pedirTaxaJuros();
-
-        Financiamento financiamentoUsuario = new Financiamento(valorImovel, prazoFinanciamento, taxaJurosAnual);
-        listaFinanciamento.add(financiamentoUsuario);
-
-        listaFinanciamento.add(new Apartamento(350000, 27, 8.2));
-        listaFinanciamento.add(new Terreno(210000, 12, 9.1));
-        listaFinanciamento.add(new Casa(530000,31,7.4));
+        listaFinanciamento.add(new Apartamento(350000, 27, 8.2, 2, 10));
+        listaFinanciamento.add(new Terreno(210000, 12, 9.1, Terreno.TipoZona.RESIDENCIAL));
+        listaFinanciamento.add(new Casa(530000,31,7.4, 10000, 20000));
 
         double somaValorImovel = 0;
         double somaTotalFinanciamentos = 0;

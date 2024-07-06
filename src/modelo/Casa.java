@@ -2,13 +2,18 @@ package modelo;
 
 public class Casa extends Financiamento {
 
-    public Casa (double valorImovel, int prazoFinanciamentoAnos, double taxaJurosAnual) {
+    private double areaConstruida;
+    private double tamanhoTerreno;
+
+    public Casa(double valorImovel, int prazoFinanciamentoAnos, double taxaJurosAnual, double areaConstruida, double tamanhoTerreno) {
         super(valorImovel, prazoFinanciamentoAnos, taxaJurosAnual);
+        this.areaConstruida = areaConstruida;
+        this.tamanhoTerreno = tamanhoTerreno;
     }
 
     @Override
     public double calcularPagamentoMensal() {
-        double pagamentoMensalPadrao = super.calcularPagamentoMensal();
+        double pagamentoMensalPadrao = this.valorImovel / (this.prazoFinanciamentoAnos * 12) * (1 + (this.taxaJurosAnual / 12));
         return pagamentoMensalPadrao + 80;
     }
 }
