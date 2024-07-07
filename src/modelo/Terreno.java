@@ -7,7 +7,7 @@ public class Terreno extends Financiamento {
         COMERCIAL
     }
 
-    private TipoZona tipoZona;
+    public TipoZona tipoZona;
 
     public Terreno(double valorImovel, int prazoFinanciamentoAnos, double taxaJurosAnual, TipoZona tipoZona) {
         super(valorImovel, prazoFinanciamentoAnos, taxaJurosAnual);

@@ -9,6 +9,14 @@ import util.InterfaceUsuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
 
 public class Main {
     public static void main(String[] args) {
@@ -65,5 +73,60 @@ public class Main {
         }
 
         System.out.println("Total de todos os imóveis - Valor do imóvel = " + somaValorImovel + "; Total de todos os financiamentos = " + somaTotalFinanciamentos);
+
+        try {
+            salvarDadosFinanciamentoTxt(listaFinanciamento, "dados_financiamento.txt");
+            salvarDadosFinanciamentoSerializado(listaFinanciamento, "dados_financiamento.ser");
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar os dados: " + e.getMessage());
+        }
+    }
+
+    public static void salvarDadosFinanciamentoTxt(List<Financiamento> listaFinanciamento, String nomeArquivo) throws IOException {
+        FileWriter escritor = new FileWriter(nomeArquivo);
+        for (Financiamento financiamento : listaFinanciamento) {
+            escritor.write(financiamento.getvalorImovel() + "," + financiamento.calcularTotalPagamento() + "," + financiamento.gettaxaJurosAnual() + "," + financiamento.getPrazoFinanciamentoAnos() + ",");
+
+            if (financiamento instanceof Apartamento) {
+                Apartamento apartamento = (Apartamento) financiamento;
+                escritor.write(apartamento.numeroVagasGaragem + "," + apartamento.numeroAndar + "\n");
+            } else if (financiamento instanceof Terreno) {
+                Terreno terreno = (Terreno) financiamento;
+                escritor.write(terreno.tipoZona + "\n");
+            } else if (financiamento instanceof Casa) {
+                Casa casa = (Casa) financiamento;
+                escritor.write(casa.areaConstruida + "," + casa.tamanhoTerreno + "\n");
+            }
+        }
+        escritor.close();
+        System.out.println("Dados salvos em " + nomeArquivo);
+
+        BufferedReader leitor = new BufferedReader(new FileReader(nomeArquivo));
+        String linha;
+        while ((linha = leitor.readLine()) != null) {
+            System.out.println(linha);
+        }
+        leitor.close();
+    }
+    public static void salvarDadosFinanciamentoSerializado(List<Financiamento> listaFinanciamento, String nomeArquivo) throws IOException {
+        FileOutputStream arquivo = new FileOutputStream(nomeArquivo);
+        ObjectOutputStream objeto = new ObjectOutputStream(arquivo);
+        objeto.writeObject(listaFinanciamento);
+        objeto.close();
+        arquivo.close();
+        System.out.println("Dados salvos em " + nomeArquivo);
+
+        FileInputStream arquivoLeitura = new FileInputStream(nomeArquivo);
+        ObjectInputStream objetoLeitura = new ObjectInputStream(arquivoLeitura);
+        try {
+            List<Financiamento> listaLida = (List<Financiamento>) objetoLeitura.readObject();
+            for (Financiamento financiamento : listaLida) {
+                System.out.println(financiamento.getvalorImovel() + "," + financiamento.calcularTotalPagamento() + "," + financiamento.gettaxaJurosAnual() + "," + financiamento.getPrazoFinanciamentoAnos());
+            }
+        } catch (ClassNotFoundException e) {
+            System.out.println("Classe não encontrada: " + e.getMessage());
+        }
+        objetoLeitura.close();
+        arquivoLeitura.close();
     }
 }

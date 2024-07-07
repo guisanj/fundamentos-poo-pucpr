@@ -2,8 +2,8 @@ package modelo;
 
 public class Casa extends Financiamento {
 
-    private double areaConstruida;
-    private double tamanhoTerreno;
+    public double areaConstruida;
+    public double tamanhoTerreno;
 
     public Casa(double valorImovel, int prazoFinanciamentoAnos, double taxaJurosAnual, double areaConstruida, double tamanhoTerreno) {
         super(valorImovel, prazoFinanciamentoAnos, taxaJurosAnual);
